@@ -1,0 +1,25 @@
+name: K8s CI test
+on:
+  - push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    name: deploy to minikube
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Try the cluster !
+      run: kubectl get pods -A
+    - name: Install ingress controller
+      run: minikube addons enable ingress     
+    - name: Deploy to minikube containers and service
+      run: kubectl apply -f https://github.com/obligatorioDevOps/k8s/blob/main/obligatorio.yml
+    - name: Deploy to minikube ingress
+      run: kubectl apply -f https://github.com/obligatorioDevOps/k8s/blob/main/ingress.yml
+    - name: Test service URLs
+      run: |
+        minikube service list
+        minikube service example --url
+        echo "------------------opening the service------------------"
+        curl $(minikube service example --url)        
