@@ -22,6 +22,6 @@ jobs:
     - name: Test service URLs
       run: |
         minikube service list
-        minikube service ingress-nginx-controller  --url
+        minikube service ingress-nginx-controller -n ingress-nginx --url
         echo "------------------opening the service------------------"
-        curl $(minikube service ingress-nginx-controller  --url)        
+        curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)        
