@@ -19,9 +19,4 @@ jobs:
       run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
     - name: Deploy to minikube ingress
       run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/ingress.yml
-    - name: Test service URLs
-      run: |
-        minikube service list
-        minikube service ingress-nginx-controller -n ingress-nginx --url
-        echo "------------------opening the service------------------"
-        curl $(minikube service ingress-nginx-controller -n ingress-nginx --url)        
+   
