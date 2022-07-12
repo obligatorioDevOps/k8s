@@ -14,9 +14,9 @@ jobs:
     - name: Install ingress controller
       run: minikube addons enable ingress     
     - name: Deploy to minikube containers and service
-      run: kubectl apply -f https://github.com/obligatorioDevOps/k8s/blob/main/obligatorio.yml
+      run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
     - name: Deploy to minikube ingress
-      run: kubectl apply -f https://github.com/obligatorioDevOps/k8s/blob/main/ingress.yml
+      run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/ingress.yml
     - name: Test service URLs
       run: |
         minikube service list
