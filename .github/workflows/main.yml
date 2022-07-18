@@ -17,6 +17,5 @@ jobs:
       run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
     - name: Delete ValidatingWebhookConfiguration
       run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-    - name: Deploy to minikube ingress
-      run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/ingress.yml
+
    
