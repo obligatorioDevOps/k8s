@@ -18,11 +18,19 @@ jobs:
     - name: Delete ValidatingWebhookConfiguration
       run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
   
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    name: deploy to eks
+    runs-on: ubuntu-latest 
     steps:
-    - uses: tale/kubectl-action@v1
-      with:
-        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-    - run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
+      # --- #
+      - name: Build and push CONTAINER_NAME
+        uses: ianbelcher/eks-kubectl-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+          eks_role_arn: ${{ secrets.EKS_ROLE_ARN }}
+          args: apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
+      # --- #
 
