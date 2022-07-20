@@ -20,10 +20,11 @@ jobs:
   
   deploy:
     name: deploy to eks
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    needs: [test]
     steps:
       # --- #
-      - name: Build and push CONTAINER_NAME
+      - name: Deploy project
         uses: ianbelcher/eks-kubectl-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
