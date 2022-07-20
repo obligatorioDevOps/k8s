@@ -18,16 +18,11 @@ jobs:
     - name: Delete ValidatingWebhookConfiguration
       run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
   
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    needs: [test]
-
     steps:
-      
-      - name: DEploy to cluster
-      - uses: tale/kubectl-action@v1
-        with:
-          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-          kubectl-version: v1.22.0
-      - run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml   
+    - uses: tale/kubectl-action@v1
+      with:
+        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+    - run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
 
