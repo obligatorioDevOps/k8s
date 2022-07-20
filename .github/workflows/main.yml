@@ -2,7 +2,7 @@ name: K8s CI test
 on:
   - push
 jobs:
-  job1:
+  test:
     runs-on: ubuntu-latest
     name: deploy to minikube
     steps:
@@ -17,5 +17,17 @@ jobs:
       run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
     - name: Delete ValidatingWebhookConfiguration
       run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
 
-   
+    steps:
+      
+      - name: DEploy to cluster
+      - uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+          kubectl-version: v1.22.0
+      - run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml   
+
