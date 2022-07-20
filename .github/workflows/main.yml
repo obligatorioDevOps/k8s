@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - name: Deploy project
+      - name: Deploy project to eks
         uses: ianbelcher/eks-kubectl-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
