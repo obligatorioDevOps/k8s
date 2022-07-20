@@ -1,29 +1,13 @@
-name: K8s CI test
+name: K8s CI
 on:
   - push
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    name: deploy to minikube
-    steps:
-    - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
-    - name: Try the cluster !
-      run: kubectl get pods -A
-    - name: Install ingress controller
-      run: minikube addons enable ingress     
-    - name: Deploy to minikube containers and service
-      run: kubectl apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
-    - name: Delete ValidatingWebhookConfiguration
-      run: kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-  
+    
   deploy:
     name: deploy to eks
     runs-on: ubuntu-latest
-    needs: [test]
     steps:
-      # --- #
+      
       - name: Deploy project
         uses: ianbelcher/eks-kubectl-action@master
         with:
@@ -33,5 +17,5 @@ jobs:
           cluster_name: ${{ secrets.CLUSTER_NAME }}
           eks_role_arn: ${{ secrets.EKS_ROLE_ARN }}
           args: apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
-      # --- #
+      
 
