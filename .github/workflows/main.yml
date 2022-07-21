@@ -1,6 +1,8 @@
 name: K8s CI
+
 on:
-  - push
+  workflow_call:
+  
 jobs:
     
   deploy:
