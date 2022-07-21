@@ -4,12 +4,10 @@ on:
   workflow_call:
   
 jobs:
-    
-  deploy:
+ deploy:
     name: deploy to eks
     runs-on: ubuntu-latest
-    steps:
-      
+    steps:     
       - name: Deploy project to eks
         uses: ianbelcher/eks-kubectl-action@master
         with:
@@ -17,7 +15,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           cluster_name: ${{ secrets.CLUSTER_NAME }}
-          eks_role_arn: ${{ secrets.EKS_ROLE_ARN }}
-          args: apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml
-      
-
+          args: apply -f https://raw.githubusercontent.com/obligatorioDevOps/k8s/main/obligatorio.yml    
